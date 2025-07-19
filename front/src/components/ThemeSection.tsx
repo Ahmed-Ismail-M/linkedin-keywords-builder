@@ -4,19 +4,20 @@ import React, { useEffect } from "react";
 
 const ThemeSection: React.FC = () => {
   const { theme, setTheme } = themeBuilder();
-   useEffect(() => {
-    // Set data-theme attribute dynamically
+  useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
+
   return (
-    <div className="dropdown ">
+    <div className="dropdown dropdown-end">
       <div
         tabIndex={0}
         role="button"
-        className="btn btn-ghost btn-circle hover:bg-white/50 transition-all duration-300"
+        className="btn btn-ghost btn-circle btn-lg hover:bg-base-200 transition-all duration-300 tooltip"
+        data-tip="Change colors!"
       >
         <svg
-          className="w-5 h-5"
+          className="w-6 h-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -31,19 +32,19 @@ const ThemeSection: React.FC = () => {
       </div>
       <ul
         tabIndex={0}
-        className="dropdown-content z-[1] menu p-2 shadow-2xl bg-base-100/95 backdrop-blur-md border border-base-300/50 rounded-2xl w-56"
+        className="dropdown-content menu p-3 shadow-lg bg-base-100/95 backdrop-blur-md border border-base-300/50 rounded-xl w-60"
       >
         {themes.map((themeOption) => (
           <li key={themeOption.name}>
             <a
               onClick={() => setTheme(themeOption.name)}
-              className={`flex items-center gap-3 hover:bg-primary/10 transition-all duration-200 ${
+              className={`flex items-center gap-3 p-2 rounded-lg hover:bg-primary/10 transition-all duration-200 text-base ${
                 theme === themeOption.name
-                  ? "bg-primary/20 text-primary font-semibold"
+                  ? "bg-primary/20 text-primary font-bold"
                   : ""
               }`}
             >
-              <span className="text-lg">{themeOption.icon}</span>
+              <span className="text-xl">{themeOption.icon}</span>
               {themeOption.label}
             </a>
           </li>

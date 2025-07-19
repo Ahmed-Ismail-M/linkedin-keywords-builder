@@ -1,32 +1,39 @@
 import React, { useEffect } from "react";
+import { SectionType, QueryOutput } from "../types/api";
+import { sectionConfigs } from "../config/sectionConfigs";
+import { themeBuilder } from "../hooks/themeBuilder";
+import { useQueryBuilder } from "../hooks/useQueryBuilder";
+import { themes } from "@/config/themeConfigs";
 
+// HelpSection Component
 const HelpSection: React.FC = () => (
-  <div className="mt-12 card bg-info bg-opacity-10 border border-info border-opacity-20">
-    <div className="card-body">
-      <h3 className="card-title text-lg flex items-center gap-2">
+  <div className="mt-8 card bg-info/10 border border-info/20 rounded-2xl shadow-md">
+    <div className="card-body p-6">
+      <h3 className="card-title text-2xl font-bold text-info flex items-center gap-3">
         <span role="img" aria-label="lightbulb">
           💡
         </span>
-        How it works
+        How to Use This!
       </h3>
-      <div className="text-sm space-y-2">
-        <p>
-          <strong>Must Have:</strong> All these words will be in every result
+      <div className="space-y-4 text-base">
+        <p className="flex items-start gap-2">
+          <span className="badge badge-success badge-lg">Must Have</span>
+          <span>These words are in ALL your results!</span>
         </p>
-        <p>
-          <strong>Nice to Have:</strong> Results might have any of these words
+        <p className="flex items-start gap-2">
+          <span className="badge badge-warning badge-lg">Nice to Have</span>
+          <span>Results might have SOME of these words!</span>
         </p>
-        <p>
-          <strong>Don't Want:</strong> Results will never have these words
+        <p className="flex items-start gap-2">
+          <span className="badge badge-error badge-lg">Don't Want</span>
+          <span>These words won't show up in results!</span>
         </p>
       </div>
     </div>
   </div>
 );
 
-import { SectionType } from "../types/api";
-import { sectionConfigs } from "../config/sectionConfigs";
-
+// InputSection Component
 interface InputSectionProps {
   type: SectionType;
   list: string[];
@@ -56,33 +63,37 @@ const InputSection: React.FC<InputSectionProps> = ({
 
   return (
     <div
-      className={`card bg-${config.color} bg-opacity-10 border border-${config.color} border-opacity-20`}
+      className={`card bg-${config.color}/10 border border-${config.color}/20 rounded-2xl shadow-md`}
     >
-      <div className="card-body p-4">
-        <div className="flex items-center gap-2 mb-2">
-          <span className="text-2xl" role="img" aria-label={config.title}>
+      <div className="card-body p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-3xl" role="img" aria-label={config.title}>
             {config.icon}
           </span>
-          <h3 className="card-title text-lg">{config.title}</h3>
+          <h3 className="card-title text-2xl font-bold text-{config.color}">
+            {config.title}
+          </h3>
         </div>
-        <p className="text-sm opacity-70 mb-3">{config.description}</p>
+        <p className="text-base text-base-content/70 mb-4">
+          {config.description}
+        </p>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           {list.map((item, index) => (
-            <div key={`${type}-${index}`} className="flex gap-2">
+            <div key={`${type}-${index}`} className="flex items-center gap-3">
               <input
                 type="text"
-                placeholder="Type here..."
-                className="input input-bordered input-sm flex-1"
+                placeholder="Type a word..."
+                className="input input-bordered input-md flex-1 text-base rounded-lg"
                 value={item}
                 onChange={(e) => onUpdateItem(setter, index, e.target.value)}
-                aria-label={`${config.title} item ${index + 1}`}
+                aria-label={`${config.title} word ${index + 1}`}
               />
               {list.length > 1 && (
                 <button
-                  className="btn btn-ghost btn-sm btn-circle text-error hover:bg-error hover:text-error-content"
+                  className="btn btn-error btn-circle btn-md hover:bg-error/80"
                   onClick={() => onRemoveItem(list, setter, index)}
-                  aria-label={`Remove ${config.title} item ${index + 1}`}
+                  aria-label={`Remove ${config.title} word ${index + 1}`}
                   type="button"
                 >
                   ✕
@@ -90,15 +101,15 @@ const InputSection: React.FC<InputSectionProps> = ({
               )}
             </div>
           ))}
-
           <button
-            className={`btn btn-${config.color} btn-outline btn-sm gap-1`}
+            className={`btn btn-${config.color} btn-md rounded-lg gap-2 mt-4 tooltip`}
             onClick={() => onAddItem(setter)}
             type="button"
-            aria-label={`Add another ${config.title} item`}
+            aria-label={`Add another ${config.title} word`}
+            data-tip="Add another word!"
           >
-            <span className="text-lg">+</span>
-            Add another
+            <span className="text-xl">+</span>
+            Add More
           </button>
         </div>
       </div>
@@ -106,63 +117,63 @@ const InputSection: React.FC<InputSectionProps> = ({
   );
 };
 
-import { QueryOutput } from "../types/api";
-
+// ResultCard Component
 interface ResultCardProps {
   result: QueryOutput;
 }
 
 const ResultCard: React.FC<ResultCardProps> = ({ result }) => (
-  <div className="card bg-base-100 shadow-xl">
-    <div className="card-body">
-      <h2 className="card-title text-2xl flex items-center gap-2">
+  <div className="card bg-base-100 shadow-lg rounded-2xl">
+    <div className="card-body p-6">
+      <h2 className="card-title text-3xl font-bold text-primary flex items-center gap-3">
         <span role="img" aria-label="celebration">
           🎉
         </span>
-        Your Search is Ready!
+        Your Search is Done!
       </h2>
 
-      <div className="space-y-4">
-        <div className="bg-base-200 rounded-lg p-4">
-          <h3 className="font-semibold text-sm uppercase tracking-wide text-base-content opacity-60 mb-2">
-            Search Query
+      <div className="space-y-5">
+        <div className="bg-base-200 rounded-lg p-5">
+          <h3 className="font-semibold text-base uppercase tracking-wide text-base-content/60 mb-3">
+            Your Search Words
           </h3>
-          <p className="font-mono text-sm break-all bg-base-100 p-3 rounded border">
+          <p className="font-mono text-base bg-base-100 p-4 rounded-lg border break-words">
             {result.raw_query}
           </p>
         </div>
 
-        <div className="bg-primary bg-opacity-10 rounded-lg p-4">
-          <h3 className="font-semibold text-sm uppercase tracking-wide text-base-content opacity-60 mb-2">
-            Try It Out!
+        <div className="bg-primary/10 rounded-lg p-5">
+          <h3 className="font-semibold text-base uppercase tracking-wide text-base-content/60 mb-3">
+            Try Your Search!
           </h3>
           <a
             href={result.example_link}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-primary gap-2"
+            className="btn btn-primary btn-md rounded-lg gap-2 tooltip"
             aria-label="Open LinkedIn search in new tab"
+            data-tip="Open your search on LinkedIn!"
           >
             <span role="img" aria-label="link">
               🔗
             </span>
-            Open LinkedIn Search
+            Go to LinkedIn
           </a>
         </div>
 
-        <div className="collapse collapse-arrow bg-base-200">
-          <input type="checkbox" aria-label="Toggle technical details" />
-          <div className="collapse-title font-medium">
+        <div className="collapse collapse-arrow bg-base-200 rounded-lg">
+          <input type="checkbox" aria-label="Toggle extra details" />
+          <div className="collapse-title font-semibold text-base flex items-center gap-2">
             <span role="img" aria-label="nerd">
               🤓
-            </span>{" "}
-            Technical Details (for grown-ups)
+            </span>
+            Extra Details
           </div>
-          <div className="collapse-content">
-            <div className="space-y-2">
+          <div className="collapse-content p-4">
+            <div className="space-y-3">
               <div>
-                <strong>Encoded:</strong>
-                <code className="block mt-1 p-2 bg-base-100 rounded text-xs break-all">
+                <strong>Special Code:</strong>
+                <code className="block mt-2 p-3 bg-base-100 rounded-lg text-sm break-words">
                   {result.encoded}
                 </code>
               </div>
@@ -174,24 +185,23 @@ const ResultCard: React.FC<ResultCardProps> = ({ result }) => (
   </div>
 );
 
-import { themes } from "@/config/themeConfigs";
-import { themeBuilder } from "@/hooks/themeBuilder";
-
+// ThemeSection Component
 const ThemeSection: React.FC = () => {
   const { theme, setTheme } = themeBuilder();
   useEffect(() => {
-    // Set data-theme attribute dynamically
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
+
   return (
-    <div className="dropdown ">
+    <div className="dropdown dropdown-end">
       <div
         tabIndex={0}
         role="button"
-        className="btn btn-ghost btn-circle hover:bg-white/50 transition-all duration-300"
+        className="btn btn-ghost btn-circle btn-lg hover:bg-base-200 transition-all duration-300 tooltip"
+        data-tip="Change colors!"
       >
         <svg
-          className="w-5 h-5"
+          className="w-6 h-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -206,19 +216,19 @@ const ThemeSection: React.FC = () => {
       </div>
       <ul
         tabIndex={0}
-        className="dropdown-content z-[1] menu p-2 shadow-2xl bg-base-100/95 backdrop-blur-md border border-base-300/50 rounded-2xl w-56"
+        className="dropdown-content menu p-3 shadow-lg bg-base-100/95 backdrop-blur-md border border-base-300/50 rounded-xl w-60"
       >
         {themes.map((themeOption) => (
           <li key={themeOption.name}>
             <a
               onClick={() => setTheme(themeOption.name)}
-              className={`flex items-center gap-3 hover:bg-primary/10 transition-all duration-200 ${
+              className={`flex items-center gap-3 p-2 rounded-lg hover:bg-primary/10 transition-all duration-200 text-base ${
                 theme === themeOption.name
-                  ? "bg-primary/20 text-primary font-semibold"
+                  ? "bg-primary/20 text-primary font-bold"
                   : ""
               }`}
             >
-              <span className="text-lg">{themeOption.icon}</span>
+              <span className="text-xl">{themeOption.icon}</span>
               {themeOption.label}
             </a>
           </li>
@@ -228,8 +238,7 @@ const ThemeSection: React.FC = () => {
   );
 };
 
-import { useQueryBuilder } from "../hooks/useQueryBuilder";
-
+// QueryBuilder Component
 const QueryBuilder: React.FC = () => {
   const {
     mustHave,
@@ -250,110 +259,112 @@ const QueryBuilder: React.FC = () => {
   } = useQueryBuilder();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-4">
-      <ThemeSection />
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 p-6">
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeSection />
+      </div>
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-primary mb-2">
+        <header className="text-center mb-10">
+          <h1 className="text-5xl font-extrabold text-primary mb-3 flex items-center justify-center gap-3">
             <span role="img" aria-label="magnifying glass">
               🔍
-            </span>{" "}
-            Smart Search Builder
+            </span>
+            Fun Search Maker
           </h1>
-          <p className="text-lg text-base-content opacity-70">
-            Tell me what you want to find, and I'll help you build the perfect
-            search!
+          <p className="text-xl text-base-content/70">
+            Pick words to find what you want. It's super easy!
           </p>
         </header>
 
         {/* Form */}
-        <div>
-          <div className="grid gap-6 mb-8">
-            <InputSection
-              type="mustHave"
-              list={mustHave}
-              setter={setMustHave}
-              onAddItem={addItem}
-              onRemoveItem={removeItem}
-              onUpdateItem={updateItem}
-            />
-            <InputSection
-              type="optionalOr"
-              list={optionalOr}
-              setter={setOptionalOr}
-              onAddItem={addItem}
-              onRemoveItem={removeItem}
-              onUpdateItem={updateItem}
-            />
-            <InputSection
-              type="exclude"
-              list={exclude}
-              setter={setExclude}
-              onAddItem={addItem}
-              onRemoveItem={removeItem}
-              onUpdateItem={updateItem}
-            />
+        <div className="space-y-6 mb-10">
+          <InputSection
+            type="mustHave"
+            list={mustHave}
+            setter={setMustHave}
+            onAddItem={addItem}
+            onRemoveItem={removeItem}
+            onUpdateItem={updateItem}
+          />
+          <InputSection
+            type="optionalOr"
+            list={optionalOr}
+            setter={setOptionalOr}
+            onAddItem={addItem}
+            onRemoveItem={removeItem}
+            onUpdateItem={updateItem}
+          />
+          <InputSection
+            type="exclude"
+            list={exclude}
+            setter={setExclude}
+            onAddItem={addItem}
+            onRemoveItem={removeItem}
+            onUpdateItem={updateItem}
+          />
+        </div>
+
+        {/* Error Display */}
+        {error && (
+          <div className="alert alert-error rounded-lg mb-6 shadow-md">
+            <span role="img" aria-label="error">
+              ⚠️
+            </span>
+            <span>{error}</span>
+            <button
+              className="btn btn-sm btn-ghost"
+              onClick={() => window.location.reload()}
+              aria-label="Retry"
+            >
+              Try Again
+            </button>
           </div>
+        )}
 
-          {/* Error Display */}
-          {error && (
-            <div className="alert alert-error mb-4">
-              <span role="img" aria-label="error">
-                ⚠️
-              </span>
-              <span>{error}</span>
-              <button
-                className="btn btn-sm btn-ghost"
-                onClick={() => window.location.reload()}
-              >
-                Retry
-              </button>
-            </div>
-          )}
-
-          {/* Submit Button */}
-          <div className="text-center mb-8">
-            <div className="flex gap-4 justify-center">
-              <button
-                className="btn btn-primary btn-lg gap-2"
-                onClick={handleSubmit}
-                disabled={loading || isSubmitDisabled}
-                type="button"
-                aria-label="Create search query"
-              >
-                {loading ? (
-                  <>
-                    <span
-                      className="loading loading-spinner"
-                      aria-hidden="true"
-                    ></span>
-                    Building your search...
-                  </>
-                ) : (
-                  <>
-                    <span role="img" aria-label="rocket">
-                      🚀
-                    </span>
-                    Create My Search!
-                  </>
-                )}
-              </button>
-
-              {result && (
-                <button
-                  className="btn btn-outline btn-lg"
-                  onClick={resetForm}
-                  type="button"
-                  aria-label="Start over"
-                >
-                  <span role="img" aria-label="reset">
-                    🔄
+        {/* Submit Button */}
+        <div className="text-center mb-10">
+          <div className="flex gap-4 justify-center">
+            <button
+              className="btn btn-primary btn-lg rounded-lg gap-3 tooltip"
+              onClick={handleSubmit}
+              disabled={loading || isSubmitDisabled}
+              type="button"
+              aria-label="Create search query"
+              data-tip="Make your search now!"
+            >
+              {loading ? (
+                <>
+                  <span
+                    className="loading loading-spinner"
+                    aria-hidden="true"
+                  ></span>
+                  Building...
+                </>
+              ) : (
+                <>
+                  <span role="img" aria-label="rocket">
+                    🚀
                   </span>
-                  Start Over
-                </button>
+                  Make My Search!
+                </>
               )}
-            </div>
+            </button>
+
+            {result && (
+              <button
+                className="btn btn-outline btn-lg rounded-lg gap-3 tooltip"
+                onClick={resetForm}
+                type="button"
+                aria-label="Start over"
+                data-tip="Start a new search!"
+              >
+                <span role="img" aria-label="reset">
+                  🔄
+                </span>
+                Try Again
+              </button>
+            )}
           </div>
         </div>
 
@@ -366,3 +377,5 @@ const QueryBuilder: React.FC = () => {
     </div>
   );
 };
+
+export default QueryBuilder;

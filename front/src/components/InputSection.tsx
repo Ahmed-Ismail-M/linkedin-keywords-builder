@@ -17,37 +17,43 @@ const InputSection: React.FC<InputSectionProps> = ({
   setter,
   onAddItem,
   onRemoveItem,
-  onUpdateItem
+  onUpdateItem,
 }) => {
   const config = sectionConfigs[type];
-  
+
   return (
-    <div className={`card bg-${config.color} bg-opacity-10 border border-${config.color} border-opacity-20`}>
-      <div className="card-body p-4">
-        <div className="flex items-center gap-2 mb-2">
-          <span className="text-2xl" role="img" aria-label={config.title}>
+    <div
+      className={`card bg-${config.color}/10 border border-${config.color}/20 rounded-2xl shadow-md`}
+    >
+      <div className="card-body p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-3xl" role="img" aria-label={config.title}>
             {config.icon}
           </span>
-          <h3 className="card-title text-lg">{config.title}</h3>
+          <h3 className="card-title text-2xl font-bold text-{config.color}">
+            {config.title}
+          </h3>
         </div>
-        <p className="text-sm opacity-70 mb-3">{config.description}</p>
-        
-        <div className="space-y-2">
+        <p className="text-base text-base-content/70 mb-4">
+          {config.description}
+        </p>
+
+        <div className="space-y-3">
           {list.map((item, index) => (
-            <div key={`${type}-${index}`} className="flex gap-2">
+            <div key={`${type}-${index}`} className="flex items-center gap-3">
               <input
                 type="text"
-                placeholder="Type here..."
-                className="input input-bordered input-sm flex-1"
+                placeholder="Type a word..."
+                className="input input-bordered input-md flex-1 text-base rounded-lg"
                 value={item}
                 onChange={(e) => onUpdateItem(setter, index, e.target.value)}
-                aria-label={`${config.title} item ${index + 1}`}
+                aria-label={`${config.title} word ${index + 1}`}
               />
               {list.length > 1 && (
                 <button
-                  className="btn btn-ghost btn-sm btn-circle text-error hover:bg-error hover:text-error-content"
+                  className="btn btn-error btn-circle btn-md hover:bg-error/80"
                   onClick={() => onRemoveItem(list, setter, index)}
-                  aria-label={`Remove ${config.title} item ${index + 1}`}
+                  aria-label={`Remove ${config.title} word ${index + 1}`}
                   type="button"
                 >
                   ✕
@@ -55,15 +61,15 @@ const InputSection: React.FC<InputSectionProps> = ({
               )}
             </div>
           ))}
-          
           <button
-            className={`btn btn-${config.color} btn-outline btn-sm gap-1`}
+            className={`btn btn-${config.color} btn-md rounded-lg gap-2 mt-4 tooltip`}
             onClick={() => onAddItem(setter)}
             type="button"
-            aria-label={`Add another ${config.title} item`}
+            aria-label={`Add another ${config.title} word`}
+            data-tip="Add another word!"
           >
-            <span className="text-lg">+</span>
-            Add another
+            <span className="text-xl">+</span>
+            Add More
           </button>
         </div>
       </div>
