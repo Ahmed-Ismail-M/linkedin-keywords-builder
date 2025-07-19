@@ -31,17 +31,14 @@ const QueryBuilder: React.FC = () => {
       </div>
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <header className="text-center mb-10">
-          <h1 className="text-5xl font-extrabold text-primary mb-3 flex items-center justify-center gap-3">
-            <span role="img" aria-label="magnifying glass">
-              🔍
-            </span>
-            Fun Search Maker
-          </h1>
-          <p className="text-xl text-base-content/70">
-            Pick words to find what you want. It's super easy!
-          </p>
-        </header>
+      <header className="text-center mb-12">
+  <h1 className="text-5xl font-extrabold text-primary mb-4 flex items-center justify-center gap-4 animate-fade-in">
+    <span role="img" aria-label="magnifying glass">🔍</span> LinkedIn Job Search!
+  </h1>
+  <p className="text-xl text-base-content/70 max-w-2xl mx-auto leading-relaxed">
+   Easily add your must-have skills and desired roles to find relevant opportunities on LinkedIn.
+  </p>
+</header>
 
         {/* Form */}
         <div className="space-y-6 mb-10">

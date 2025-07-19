@@ -2,21 +2,21 @@ import { SectionConfig, SectionType } from '../types/api';
 
 export const sectionConfigs: Record<SectionType, SectionConfig> = {
   mustHave: {
-    title: "Must Have",
+    title: "Must-Have Skills",
     color: "success",
-    icon: "✅",
-    description: "These words MUST be in the results - like ingredients in a recipe!"
+    icon: "💼",
+    description: "Add skills or keywords that MUST be in your job search, like 'Python' or 'Marketing' – think of these as your dream job essentials!"
   },
   optionalOr: {
-    title: "Nice to Have",
+    title: "Nice-to-Have Extras",
     color: "warning",
-    icon: "⭐",
-    description: "Any of these words would be great to find - like bonus toppings!"
+    icon: "🌟",
+    description: "Include skills or roles you'd love to see, like 'Remote' or 'Manager' – these are like bonus perks for your perfect job!"
   },
   exclude: {
-    title: "Don't Want",
+    title: "Not Interested",
     color: "error",
-    icon: "❌",
-    description: "Keep these words OUT of the results - like foods you don't like!"
+    icon: "🚫",
+    description: "List keywords to avoid, like 'Intern' or 'Sales' – keep these out of your job search, like jobs that don’t fit your goals!"
   }
 };
