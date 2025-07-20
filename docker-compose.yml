@@ -13,7 +13,7 @@ services:
     build: ./front
     container_name: nextjs-app
     ports:
-      - "3050:3050"
+      - "7050:7050"
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:8080
     depends_on:
