@@ -15,7 +15,7 @@ func main() {
     e.Use(middleware.Logger())
     e.Use(middleware.Recover())
     e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-        AllowOrigins: []string{config.AppConfig.CORSOrigin},
+        AllowOrigins: []string{config.AppConfig.CORSOrigin, config.AppConfig.CORSOriginProduction},
         AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
     }))
 
