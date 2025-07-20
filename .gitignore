@@ -15,10 +15,7 @@
 # Dependency directories (vendor/ used with older versions or vendoring)
 vendor/
 
-# Go modules
-go.sum
-# Uncomment this if you want to ignore go.mod as well (not recommended)
-# go.mod
+
 
 # Test cache and coverage files
 *.cover
