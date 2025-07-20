@@ -1,9 +1,9 @@
 import { themes } from "@/config/themeConfigs";
-import { themeBuilder } from "@/hooks/themeBuilder";
+import { ThemeBuilder } from "@/hooks/themeBuilder";
 import React, { useEffect } from "react";
 
 const ThemeSection: React.FC = () => {
-  const { theme, setTheme } = themeBuilder();
+  const { theme, setTheme } = ThemeBuilder();
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);

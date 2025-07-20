@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const themeBuilder = () => {
+export const ThemeBuilder = () => {
   const [theme, setTheme] = useState("lofi");
 
   return { theme, setTheme };
