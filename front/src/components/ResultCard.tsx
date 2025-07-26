@@ -162,7 +162,7 @@ const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
 
         {/* Toast notification for successful copy */}
         {copiedField && (
-          <div className="toast toast-top toast-end">
+          <div className="toast toast-end">
             <div className="alert alert-success">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
