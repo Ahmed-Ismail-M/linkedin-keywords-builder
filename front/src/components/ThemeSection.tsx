@@ -7,10 +7,14 @@ const ThemeSection: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
+  const [previewTheme, setPreviewTheme] = useState<string | null>(null);
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
+    document.documentElement.setAttribute("data-theme", previewTheme || theme);
+  }, [theme, previewTheme]);
+
+  // useEffect(() => {
+  //   document.documentElement.setAttribute("data-theme", theme);
+  // }, [theme]);
 
   // Filter themes based on search term
   const filteredThemes = themes.filter(
@@ -29,9 +33,11 @@ const ThemeSection: React.FC = () => {
   };
 
   const handleToggle = () => {
-    setIsOpen(!isOpen);
-    if (!isOpen) {
+    const nextOpen = !isOpen;
+    setIsOpen(nextOpen);
+    if (!nextOpen) {
       setSearchTerm("");
+      setPreviewTheme(null); // revert preview
     }
   };
 
@@ -44,6 +50,7 @@ const ThemeSection: React.FC = () => {
       ) {
         setIsOpen(false);
         setSearchTerm("");
+        setPreviewTheme(null); // revert preview
       }
     };
 
@@ -121,6 +128,8 @@ const ThemeSection: React.FC = () => {
                   <div
                     key={themeOption.name}
                     onClick={() => handleThemeSelect(themeOption.name)}
+                    onMouseEnter={() => setPreviewTheme(themeOption.name)}
+                    onMouseLeave={() => setPreviewTheme(null)}
                     className={`flex items-center gap-3 p-3 rounded-lg hover:bg-primary/10 transition-all duration-200 cursor-pointer group ${
                       theme === themeOption.name
                         ? "bg-primary/20 text-primary font-semibold ring-2 ring-primary/30"
