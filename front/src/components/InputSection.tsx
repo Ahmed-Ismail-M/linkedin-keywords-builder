@@ -27,7 +27,7 @@ const InputSection: React.FC<InputSectionProps> = ({
     >
       <div className="card-body p-6">
         <div className="flex items-center gap-3 mb-4">
-          <span className="text-3xl" role="img" aria-label={config.title}>
+          <span className="text-2xl sm:text-3xl" role="img" aria-label={config.title}>
             {config.icon}
           </span>
           <h3 className="card-title text-2xl font-bold text-{config.color}">
