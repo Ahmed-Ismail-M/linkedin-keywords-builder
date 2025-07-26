@@ -9,41 +9,60 @@ import (
 
 // buildQuery constructs the LinkedIn Boolean query from the input
 func buildQuery(input models.QueryInput) string {
-	var groups []string
+	var mustParts []string
+	var optionalGroup string
 
-	// Handle must-have terms (AND logic)
+	// Must-have terms (AND logic)
 	if len(input.MustHave) > 0 {
-		// Filter out empty terms and join with AND
 		validTerms := filterEmpty(input.MustHave)
 		if len(validTerms) > 0 {
-			groups = append(groups, "("+strings.Join(validTerms, " AND ")+")")
+			mustParts = append(mustParts, "("+strings.Join(validTerms, " AND ")+")")
 		}
 	}
 
-	// Handle optional terms (OR logic)
-	if len(input.OptionalOr) > 0 {
-		// Filter out empty terms and join with OR
-		validTerms := filterEmpty(input.OptionalOr)
-		if len(validTerms) > 0 {
-			groups = append(groups, "("+strings.Join(validTerms, " OR ")+")")
-		}
-	}
-
-	// Handle exclude terms (NOT logic)
+	// Exclude terms (NOT logic)
 	if len(input.Exclude) > 0 {
-		// Filter out empty terms and join with OR for NOT clause
 		validTerms := filterEmpty(input.Exclude)
 		if len(validTerms) > 0 {
-			groups = append(groups, "NOT ("+strings.Join(validTerms, " OR ")+")")
+			mustParts = append(mustParts, "NOT ("+strings.Join(validTerms, " OR ")+")")
 		}
 	}
 
-	// Combine all groups with AND
-	if len(groups) == 0 {
-		return ""
+	// Optional terms (OR logic) — outside the required group
+	if len(input.OptionalOr) > 0 {
+		validTerms := filterEmpty(input.OptionalOr)
+		if len(validTerms) > 0 {
+			optionalGroup = "(" + strings.Join(validTerms, " OR ") + ")"
+		}
 	}
-	return strings.Join(groups, " AND ")
+
+	var queryParts []string
+
+	// Combine must and exclude into one group
+	if len(mustParts) > 0 {
+		queryParts = append(queryParts,strings.Join(mustParts, " AND "))
+	}
+
+	// Wrap main group with another set of parentheses
+	mainGroup := ""
+	if len(queryParts) > 0 {
+		mainGroup = "(" + strings.Join(queryParts, " ") + ")"
+	}
+
+	// Combine with optional group
+	if mainGroup != "" && optionalGroup != "" {
+		return mainGroup + " " + optionalGroup
+	}
+	if mainGroup != "" {
+		return mainGroup
+	}
+	if optionalGroup != "" {
+		return optionalGroup
+	}
+	return ""
 }
+
+
 
 // filterEmpty removes empty or whitespace-only strings from a slice
 func filterEmpty(terms []string) []string {
