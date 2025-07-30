@@ -1,6 +1,7 @@
 import React from 'react';
 import { SectionType } from '../types/api';
 import { sectionConfigs } from '../config/sectionConfigs';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface InputSectionProps {
   type: SectionType;
@@ -20,7 +21,8 @@ const InputSection: React.FC<InputSectionProps> = ({
   onUpdateItem,
 }) => {
   const config = sectionConfigs[type];
-
+  const { t, isRTL } = useTranslation();
+  
   return (
     <div
       className={`card bg-${config.color}/10 border border-${config.color}/20 rounded-2xl shadow-md`}
@@ -44,7 +46,7 @@ const InputSection: React.FC<InputSectionProps> = ({
               <input
                 type="text"
                 placeholder="Type a word..."
-                className="input input-bordered input-md flex-1 text-base rounded-lg"
+                className="input input-ghost input-bordered input-md flex-1 text-base rounded-lg"
                 value={item}
                 onChange={(e) => onUpdateItem(setter, index, e.target.value)}
                 aria-label={`${config.title} word ${index + 1}`}

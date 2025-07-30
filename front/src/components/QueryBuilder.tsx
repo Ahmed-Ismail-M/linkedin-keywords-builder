@@ -4,6 +4,7 @@ import InputSection from "./InputSection";
 import ResultCard from "./ResultCard";
 import HelpSection from "./HelpSection";
 import ThemeSection from "./ThemeSection";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const QueryBuilder: React.FC = () => {
   const {
@@ -27,7 +28,8 @@ const QueryBuilder: React.FC = () => {
   return (
 <div className="min-h-screen px-4 sm:px-6 py-6">
   {/* Theme Button */}
-  <div className="fixed top-2 right-1 sm:top-4 sm:right-4 z-50">
+  <LanguageSwitcher variant="dropdown" size="sm" />
+  <div className="fixed top-2 end-2 sm:top-4 sm:end-2 z-50">
     <ThemeSection />
   </div>
 

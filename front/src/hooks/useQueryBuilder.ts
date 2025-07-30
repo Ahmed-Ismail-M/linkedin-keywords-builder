@@ -2,7 +2,6 @@ import { useState, useCallback } from "react";
 import { QueryInput, QueryOutput } from "../types/api";
 import { apiService } from "../services/apiService";
 import { filterEmptyItems, isSubmitDisabled } from "@/util/queryHelpers";
-import { queryService } from "../services/queryService";
 export const useQueryBuilder = () => {
   const [mustHave, setMustHave] = useState<string[]>([""]);
   const [optionalOr, setOptionalOr] = useState<string[]>([""]);

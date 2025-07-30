@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { QueryOutput } from '../types/api';
+import React, { useState } from "react";
+import { QueryOutput } from "../types/api";
 
 interface ResultCardProps {
   result: QueryOutput;
@@ -12,21 +12,21 @@ const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
     try {
       await navigator.clipboard.writeText(text);
       setCopiedField(fieldName);
-      
+
       // Reset the copied state after 2 seconds
       setTimeout(() => {
         setCopiedField(null);
       }, 2000);
     } catch (err) {
-      console.error('Failed to copy text: ', err);
+      console.error("Failed to copy text: ", err);
       // Fallback for older browsers
-      const textArea = document.createElement('textarea');
+      const textArea = document.createElement("textarea");
       textArea.value = text;
       document.body.appendChild(textArea);
       textArea.select();
-      document.execCommand('copy');
+      document.execCommand("copy");
       document.body.removeChild(textArea);
-      
+
       setCopiedField(fieldName);
       setTimeout(() => {
         setCopiedField(null);
@@ -34,11 +34,11 @@ const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
     }
   };
 
-  const CopyButton: React.FC<{ text: string; fieldName: string; size?: 'sm' | 'md' }> = ({ 
-    text, 
-    fieldName, 
-    size = 'sm' 
-  }) => (
+  const CopyButton: React.FC<{
+    text: string;
+    fieldName: string;
+    size?: "sm" | "md";
+  }> = ({ text, fieldName, size = "sm" }) => (
     <button
       onClick={() => copyToClipboard(text, fieldName)}
       className={`btn btn-ghost btn-${size} btn-square tooltip tooltip-left`}
@@ -88,7 +88,7 @@ const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
           </span>
           Your Search is Done!
         </h2>
-        
+
         <div className="space-y-5">
           {/* LinkedIn Link Section */}
           <div className="bg-primary/10 rounded-lg p-5">
@@ -96,7 +96,10 @@ const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
               <h3 className="font-semibold text-base uppercase tracking-wide text-base-content/60">
                 Try Your Search!
               </h3>
-              <CopyButton text={result.example_link} fieldName="linkedin-link" />
+              <CopyButton
+                text={result.example_link}
+                fieldName="linkedin-link"
+              />
             </div>
             <div className="flex flex-col sm:flex-row gap-3">
               <a
@@ -132,7 +135,6 @@ const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
             </div>
           </div>
 
-
           {/* Collapsible Extra Details */}
           <div className="collapse collapse-arrow bg-base-200 rounded-lg">
             <input type="checkbox" aria-label="Toggle extra details" />
@@ -147,7 +149,10 @@ const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <strong>Special Code:</strong>
-                    <CopyButton text={result.encoded} fieldName="encoded-query" />
+                    <CopyButton
+                      text={result.encoded}
+                      fieldName="encoded-query"
+                    />
                   </div>
                   <div className="relative">
                     <code className="block p-3 bg-base-100 rounded-lg text-sm break-words">
